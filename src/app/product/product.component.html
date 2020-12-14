@@ -1,0 +1,104 @@
+ <ng-template let-modal #content >
+    <div class="py-3">
+      <div class="modal-content">
+
+
+        <div class="modal-header bg-primary text-white">
+          <h2> New Product </h2>
+          <button class="close" data-dismiss="modal" (click) = "modal.dismiss('Cross click')">
+            <span>&times;</span>
+          </button>
+        </div>
+ 
+        <div class="modal-body">
+          <form  #productForm="ngForm">
+            <div class="form-group">
+              <label for="code">Code</label>
+              
+              <input type="text" class="form-control" id="code"
+                    required
+                    [(ngModel)]="model.code" name="code"
+                    #code="ngModel">
+            </div>
+
+            <div class="form-group">
+              <label for="name">Name</label>
+              
+              <input type="text" class="form-control" id="name"
+                    required
+                    [(ngModel)]="model.name" name="name"
+                    #name="ngModel">
+            </div>
+
+            <div class="form-group">
+            <label for="price">price</label>
+              
+            <input type="text" class="form-control" id="price"
+                  required
+                  [(ngModel)]="model.price" name="price"
+                  #price="ngModel">
+          </div>
+            <div class="modal-footer">
+        
+            <button type="submit"  class="btn btn-primary" [disabled]="!productForm.form.valid" (click) = "onSubmit_product(productForm);modal.dismiss('Cross click')"  >Save</button>
+
+          </div>
+          </form>
+        
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+<body>   
+    <!-- POSTS -->
+    <section id="posts" class="mt-5">
+      <div class="container">
+  
+            <div class="card ">
+              <div class="card-header">
+                <h4>Latest products</h4>
+
+                <a class="btn btn-primary btn-block text-white  mb-2" (click)=" open()">
+                  <i class="fas fa-arrow-right"></i> Add new product
+                </a>
+  
+  
+            <a class="btn btn-dark btn-block"  (click)= "delete()"> delete selected elements
+            </a>
+  
+              </div>
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>code</th>
+                    <th>name</th>
+                    <th>price</th>
+                    <th>edit</th>
+                    <th>select</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody  *ngFor = "let product of products">
+                  <tr>
+                    <td> {{ product.code }}</td>
+                    <td> {{ product.name }}</td>
+                    <td> ${{ product.price}}</td>
+                    <td>
+            <a href="#" class="btn btn-dark btn-block" data-toggle="modal" (click)=" open();"> edit
+            </a>
+                    </td>
+                    <td>
+                          <input type="checkbox" class="text-center" (click)="selected(product)">
+                    </td>
+                  </tr>
+  
+                </tbody>
+              </table>
+            </div>
+          </div>
+              
+    </section>
+</body>
+
