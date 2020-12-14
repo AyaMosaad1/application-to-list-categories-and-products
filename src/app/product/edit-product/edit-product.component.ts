@@ -1,38 +1,41 @@
 import {
   Component,
-  Input,
-  OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
-} from '@angular/core';
+  OnDestroy,
+  Input
+ } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { product } from 'src/app/models/product.model';
+import { ProductService } from 'src/app/shared';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css']
 })
-export class EditProductComponent implements OnInit {
+export class EditProductComponent implements OnInit, OnDestroy{
 
   product: product[] = [
     { code: "1", name: 'Sentence 1', price: "$500", _id: 1 ,  checked:false },
     { code: "2", name: 'Sentence 2', price: "$200", _id: 2 ,  checked :false},
   ];
+  @Input('defulatData') defaultData:product | undefined;
 
   edit_index = 0 ;
   model = new product( '' , '' , '' , this.edit_index , false );
   @ViewChild('edit') edit: TemplateRef<NgbModal> | undefined;
 
   closeResult: string = ' ';
-
+  subscription: Subscription | undefined;
+  editProduct  :product | undefined;
   constructor(
     private modalService: NgbModal,
+    private productService : ProductService ,
   ) { }
-
-  ngOnInit(): void {} 
 
   open() {
     this.modalService
@@ -57,12 +60,20 @@ export class EditProductComponent implements OnInit {
     }
   }
 
+  ngOnInit(): void {
+    this.subscription = this.productService.open.subscribe((id) => {
+          this.open();
+          console.log(id);
+
+        });
+  }
+
   updateItem( item: any) {
     this.edit_index  = this.product.indexOf(item);
     this.model = item ;
   }
 
-  editItem (form:NgForm ){
+  editItem (form:NgForm){
    let product_edit = this.product[this.edit_index];
    product_edit.code = this.product[this.edit_index].code;
    product_edit.name = this.product[this.edit_index].name;
@@ -90,4 +101,8 @@ export class EditProductComponent implements OnInit {
   //   product_edit.price = form.controls['price'].value;
   //  }
  }
+   
+ ngOnDestroy(): void {
+  // this.subscription.unsubscribe();
+}
 }

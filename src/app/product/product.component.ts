@@ -9,6 +9,7 @@ import {
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { product } from '../models/product.model';
+import {ProductService } from '../shared';
 
 @Component({
   selector: 'app-product',
@@ -16,24 +17,29 @@ import { product } from '../models/product.model';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+ 
   index = 2;
+
   products : product[]=[
     {code :"1" , name: 'Sentence 1' ,  price :"500" , _id: 1 ,  checked:false},
     {code :"2" , name: 'Sentence 2' ,  price :"200" , _id: 2  , checked:false},
   ] ;
+
   @ViewChild('content') content: TemplateRef<NgbModal> | undefined;
   closeResult: string = ' ';
+
+  model = new product( '' , '' , '' , this.index , false );
+  submitted = false;
+
   constructor(
     private modalService: NgbModal,
-    
+    private ProductService:ProductService
   ) { }
 
   ngOnInit(): void {
   }
 
-
   open() {
-
     this.modalService
       .open(this.content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
@@ -56,10 +62,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  model = new product( '' , '' , '' , this.index , false );
-  submitted = false;
- 
-onSubmit_product(form:NgForm) { 
+  onSubmit_product(form:NgForm) { 
     this.submitted = true;
     this.products.push( new product(form.control.value.code , form.control.value.name , form.control.value.price , this.index ));
     this.index = this.index +1; 
@@ -72,7 +75,6 @@ onSubmit_product(form:NgForm) {
   }
 
   
-  
   delete():void{
     for (let del_product of this.products) {
       if (del_product.checked == true){
@@ -80,7 +82,8 @@ onSubmit_product(form:NgForm) {
       }   
     } 
   }
-
-
-
+  
+  onClick(id:product): void {
+      this.ProductService.openModal(id);
+    }
 }
