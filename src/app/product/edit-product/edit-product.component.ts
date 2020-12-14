@@ -23,7 +23,9 @@ export class EditProductComponent implements OnInit, OnDestroy{
     { code: "1", name: 'Sentence 1', price: "$500", _id: 1 ,  checked:false },
     { code: "2", name: 'Sentence 2', price: "$200", _id: 2 ,  checked :false},
   ];
-  @Input('defulatData') defaultData:product | undefined;
+  @Input('defaultData') defaultData:product[] | undefined;
+  pro :product | undefined;
+
 
   edit_index = 0 ;
   model = new product( '' , '' , '' , this.edit_index , false );
@@ -63,14 +65,11 @@ export class EditProductComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.subscription = this.productService.open.subscribe((id) => {
           this.open();
-          console.log(id);
-
+         
+          console.log(this.defaultData);
+          this.pro = id._id;
+          this.model = this.pro ;
         });
-  }
-
-  updateItem( item: any) {
-    this.edit_index  = this.product.indexOf(item);
-    this.model = item ;
   }
 
   editItem (form:NgForm){

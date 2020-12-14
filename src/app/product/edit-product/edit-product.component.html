@@ -50,13 +50,3 @@
         </div>
         </div>
     </ng-template>
-
-        <a href="#" class="btn btn-dark btn-block" data-toggle="modal" (click)=" open();"> edit
-            </a>
-
-            <div *ngFor="let item of product" >
-        <p> {{ item.name }}</p>
-        <p> {{ item.code }}</p>
-        <p> {{ item.price }}</p>
-        <button (click)="updateItem(item);open();">Update</button>
-            </div>

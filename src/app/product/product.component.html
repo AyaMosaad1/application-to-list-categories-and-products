@@ -33,13 +33,11 @@
                     <td> {{ product.name }}</td>
                     <td> ${{ product.price}}</td>
                     <td>
-            <a class="btn btn-dark btn-block text-white" data-toggle="modal" > edit
+            <a class="btn btn-dark btn-block text-white" data-toggle="modal" (click)="onClick(product)"> edit
             </a>
-            <app-edit-product  [defaultData]="product"> </app-edit-product>
-            
-            <a class="btn btn-primary text-white ml-5" (click)="onClick(product)">
-              <i class="fas fa-arrow-right"></i> View more
-            </a>
+
+            <app-edit-product  [defaultData]="products"> </app-edit-product>
+  
                     </td>
                     <td>
                           <input type="checkbox" class="text-center" (click)="selected(product)">
@@ -53,6 +51,7 @@
               
     </section>
 </body>
+
 
 
 <ng-template let-modal #content >
@@ -106,7 +105,6 @@
     </div>
   </div>
 </ng-template>
-
 
 
 
