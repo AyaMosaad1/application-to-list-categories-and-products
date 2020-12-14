@@ -19,10 +19,10 @@ import { Subscription } from 'rxjs';
 })
 export class EditProductComponent implements OnInit, OnDestroy{
 
-  @Input('defaultData') defaultData:product[] = [{ code: "", name: '', price: "", _id: 6888 ,  checked :false} ,{ code: "", name: '', price: "", _id: 6888 ,  checked :false}];
-  pro :product= { code: "", name: '', price: "", _id: 688 ,  checked :false};
+  @Input('defaultData') defaultData:product[] = [{ code: "", name: '', price: "" ,  checked :false} ,{ code: "", name: '', price: "" ,  checked :false}];
+  pro :product= { code: "", name: '', price: "" ,  checked :false};
   edit_index = 0 ;
-  model = new product( '' , '' , '' , this.edit_index , false );
+  model = new product( '' , '' , ''  , false );
   @ViewChild('edit') edit: TemplateRef<NgbModal> | undefined;
 
   closeResult: string = ' ';
@@ -60,8 +60,8 @@ export class EditProductComponent implements OnInit, OnDestroy{
   ngOnInit(): void {  
     this.subscription = this.productService.open.subscribe((id) => {  
         this.open(); 
-        this.pro = id._id;
-        this.model = this.pro ;
+        this.pro = this.defaultData[id._id];
+        this.model = this.defaultData[id._id] ;
         });
   }
 

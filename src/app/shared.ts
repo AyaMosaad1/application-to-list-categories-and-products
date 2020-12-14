@@ -7,10 +7,10 @@ import { product } from './models/product.model';
   providedIn: 'root',
 })
 export class ProductService {
-    open = new Subject<{ _id : product }>();
+    open = new Subject<{ _id : number }>();
 
 
-  openModal(projectId: product) {
+  openModal(projectId: number) {
     this.open.next({ _id: projectId });
   }
 }

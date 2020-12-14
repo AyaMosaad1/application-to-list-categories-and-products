@@ -21,14 +21,14 @@ export class ProductComponent implements OnInit {
   index = 9;
 
   products : product[]=[
-    {code :"1" , name: 'Sentence 1' ,  price :"500" , _id: 1 ,  checked:false},
-    {code :"2" , name: 'Sentence 2' ,  price :"200" , _id: 2  , checked:false},
+    {code :"1" , name: 'Sentence 1' ,  price :"500"  ,  checked:false},
+    {code :"2" , name: 'Sentence 2' ,  price :"200"  , checked:false},
   ] ;
 
   @ViewChild('content') content: TemplateRef<NgbModal> | undefined;
   closeResult: string = ' ';
 
-  model = new product( '' , '' , '' , this.index , false );
+  model = new product( '' , '' , '' , false );
   submitted = false;
 
   constructor(
@@ -64,7 +64,7 @@ export class ProductComponent implements OnInit {
 
   onSubmit_product(form:NgForm) { 
     this.submitted = true;
-    this.products.push( new product(form.control.value.code , form.control.value.name , form.control.value.price , this.index ));
+    this.products.push( new product(form.control.value.code , form.control.value.name , form.control.value.price));
     this.index = this.index +1; 
     form.resetForm(); 
   }
@@ -84,6 +84,7 @@ export class ProductComponent implements OnInit {
   }
   
   onClick(id:product): void {
-      this.ProductService.openModal(id);
+
+      this.ProductService.openModal(this.products.indexOf(id));
     }
 }
