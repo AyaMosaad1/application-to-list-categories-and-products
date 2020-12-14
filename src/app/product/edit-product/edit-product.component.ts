@@ -19,14 +19,8 @@ import { Subscription } from 'rxjs';
 })
 export class EditProductComponent implements OnInit, OnDestroy{
 
-  product: product[] = [
-    { code: "1", name: 'Sentence 1', price: "$500", _id: 1 ,  checked:false },
-    { code: "2", name: 'Sentence 2', price: "$200", _id: 2 ,  checked :false},
-  ];
-  @Input('defaultData') defaultData:product[] | undefined;
-  pro :product | undefined;
-
-
+  @Input('defaultData') defaultData:product[] = [{ code: "", name: '', price: "", _id: 6888 ,  checked :false} ,{ code: "", name: '', price: "", _id: 6888 ,  checked :false}];
+  pro :product= { code: "", name: '', price: "", _id: 688 ,  checked :false};
   edit_index = 0 ;
   model = new product( '' , '' , '' , this.edit_index , false );
   @ViewChild('edit') edit: TemplateRef<NgbModal> | undefined;
@@ -62,21 +56,20 @@ export class EditProductComponent implements OnInit, OnDestroy{
     }
   }
 
-  ngOnInit(): void {
-    this.subscription = this.productService.open.subscribe((id) => {
-          this.open();
-         
-          console.log(this.defaultData);
-          this.pro = id._id;
-          this.model = this.pro ;
+
+  ngOnInit(): void {  
+    this.subscription = this.productService.open.subscribe((id) => {  
+        this.open(); 
+        this.pro = id._id;
+        this.model = this.pro ;
         });
   }
 
   editItem (form:NgForm){
-   let product_edit = this.product[this.edit_index];
-   product_edit.code = this.product[this.edit_index].code;
-   product_edit.name = this.product[this.edit_index].name;
-   product_edit.price = this.product[this.edit_index].price;
+   let index = this.defaultData.findIndex(x => x === this.pro);
+  this.defaultData[index].code = form.controls['code'].value;
+  this.defaultData[index].name = form.controls['name'].value;
+   this.defaultData[index].price = form.controls['price'].value;
 
 
   //  if (form.controls['code'].value == '')

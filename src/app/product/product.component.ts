@@ -18,7 +18,7 @@ import {ProductService } from '../shared';
 })
 export class ProductComponent implements OnInit {
  
-  index = 2;
+  index = 9;
 
   products : product[]=[
     {code :"1" , name: 'Sentence 1' ,  price :"500" , _id: 1 ,  checked:false},

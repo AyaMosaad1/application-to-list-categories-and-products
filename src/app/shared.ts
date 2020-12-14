@@ -7,7 +7,7 @@ import { product } from './models/product.model';
   providedIn: 'root',
 })
 export class ProductService {
-    open = new Subject<{ _id:product }>();
+    open = new Subject<{ _id : product }>();
 
 
   openModal(projectId: product) {
